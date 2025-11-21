@@ -142,4 +142,8 @@
 		// Corpses spawn as gibbed true to avoid sfx, even though they aren't actually gibbed...
 		AddComponent(/datum/component/weed_food)
 
+	//Resuscitation Changes Proc Calls
+	setRhythm()
+	setHvlBehavior()
+
 	update_execute_hud()

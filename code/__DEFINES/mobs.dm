@@ -4,6 +4,13 @@
 #define HEALTH_THRESHOLD_DEAD -100
 #define HEALTH_THRESHOLD_CRIT -50
 
+//===================================================================
+//Shockable Rhythm (SR) and Non-Shockable Rhythm (NSR) Defines
+#define SHOCKABLE_RHYTHM "SR"
+#define NON_SHOCKABLE_RHYTHM "NSR"
+
+//===================================================================
+
 //Some mob defines below
 #define AI_CAMERA_LUMINOSITY 6
 

@@ -172,7 +172,9 @@ const Patient = (props) => {
           Patient has been implanted with an alien embryo!
         </NoticeBox>
       ) : null}
-      {dead ? <NoticeBox danger>Patient is deceased!</NoticeBox> : null}
+      {dead ? (
+        <NoticeBox danger>Patient is undergoing cardiac arrest!</NoticeBox>
+      ) : null}
       {ssd ? (
         <NoticeBox warning color="grey">
           {ssd}

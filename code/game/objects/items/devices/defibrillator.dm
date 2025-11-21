@@ -186,6 +186,10 @@
 		user.visible_message(SPAN_WARNING("[icon2html(src, viewers(src))] \The [src] buzzes: Patient is braindead."))
 		return
 
+	if(!H.hasBloodToOvercomeHvo())
+		user.visible_message(SPAN_WARNING("[icon2html(src, viewers(src))] \The [src] buzzes: Underlying condition not fixed.")) //Tells the user the UC is still present in the target patient.
+		return
+
 	return TRUE
 
 /obj/item/device/defibrillator/proc/can_defib(mob/living/carbon/human/target, mob/living/carbon/human/user)

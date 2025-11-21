@@ -86,8 +86,16 @@
 	var/oxygen_alert = 0
 	var/fire_alert = 0
 	var/prev_gender = null // Debug for plural genders
+
+	//Resuscitation Variables
 	var/revive_grace_period = 5 MINUTES //5 minutes
 	var/undefibbable = FALSE //whether the human is dead and past the defibbrillation period.
+	/// Human is in cardiac arrest but cannot be resuscitated until the underlying condition(s) is/are fixed
+	var/unresuscitatable = FALSE
+	///Human is in cardiac arrest and is shockable, and shocking will revive them.
+	var/shockable = FALSE
+	/// Human is in cardiac arrest and is shockable, but shocking will not revive them.
+	var/nonshockable = FALSE
 
 	var/holo_card_color = "" //which color type of holocard is printed on us
 

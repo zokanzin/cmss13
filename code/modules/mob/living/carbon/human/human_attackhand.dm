@@ -1,5 +1,8 @@
 /mob/living/carbon/human/var/cpr_cooldown
 /mob/living/carbon/human/var/cpr_attempt_timer
+/// Continuous counter; cpr oxygen gain and permanent death prevention increases linearly and positively with time.
+/mob/living/carbon/human/var/cpr_period = 0
+
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/attacking_mob)
 	if(..())
 		return TRUE
@@ -45,6 +48,16 @@
 
 			attacking_mob.visible_message(SPAN_NOTICE("<b>[attacking_mob]</b> starts performing <b>CPR</b> on <b>[src]</b>."),
 				SPAN_HELPFUL("You start <b>performing CPR</b> on <b>[src]</b>."))
+
+			// For this do_after, one end state should be the target reaching 0 oxyloss. Another should be the target moving onto the next CPR/resucitation stage (dont need to perform cpr twice in a row).
+			// Finally, only ONE person can CPR at a time. And if done during a shock, it should hurt you.
+			cpr_period = 0 + world.time
+			if(do_after(attacking_mob, HUMAN_STRIP_DELAY * attacking_mob.get_skill_duration_multiplier(SKILL_MEDICAL), INTERRUPT_ALL, BUSY_ICON_GENERIC, src, INTERRUPT_MOVED, BUSY_ICON_MEDICAL))
+
+
+
+
+
 
 			cpr_attempt_timer = world.time + HUMAN_STRIP_DELAY * attacking_mob.get_skill_duration_multiplier(SKILL_MEDICAL)
 			if(do_after(attacking_mob, HUMAN_STRIP_DELAY * attacking_mob.get_skill_duration_multiplier(SKILL_MEDICAL), INTERRUPT_ALL, BUSY_ICON_GENERIC, src, INTERRUPT_MOVED, BUSY_ICON_MEDICAL))

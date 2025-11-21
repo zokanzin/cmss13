@@ -29,6 +29,44 @@
 		silent = 0
 		return
 
+//Resuscitation Changes Procs
+
+/**
+ * Proc to determine the rhythm of a human after reaching HEALTH_THRESHOLD_DEAD (aka "Entering Cardiac Arrest").
+ */
+/mob/living/carbon/human/proc/setRhythm()
+	message_admins("setRhythm called")
+	if (prob(25)) //The human has a 25% chance to enter a shockable rhythm (SR). Otherwise they will enter a non-shockable rhythm (NSR)
+		shockable = TRUE
+		return
+	else
+		nonshockable = TRUE
+		return
+
+
+/**
+ *  Proc to set a human's behavior in hypovolemia if they meet the conditions.
+ */
+/mob/living/carbon/human/proc/setHvlBehavior()
+	if((shockable == TRUE || nonshockable == TRUE)  && (blood_volume <= BLOOD_VOLUME_SAFE)) // checks if user is shockable/nonshockable and below the blood threshold for hypovolemia
+		unresuscitatable = TRUE // sets the human's state to unresuscititable. NOTE: THEY CANNOT EXIT THIS STATE. SET UP A PROC THAT RUNS WHEN BLOOD IS TRANSFERRED FROM A BLOODBAG/A HUMAN GAINS BLOOD, AND MAKE THIS PROC SET THIS TO FALSE!!!
+		message_admins("setHvlBehavior called") // logs if it works and was called
+	else
+		unresuscitatable = FALSE
+		message_admins("setHvlBehavior reverted or not called") // logs if it works but was not called
+
+// Resuscitation Changes
+/**
+ * Checks if the blood is above BLOOD_VOLUME_SAFE, returns TRUE. Otherwise returns FALSE.
+ */
+/mob/living/carbon/human/proc/hasBloodToOvercomeHvo(mob/living/carbon/human/target) //Note that mob/living/carbon/human/target is not used yet, seems to not work with message_admins()
+	message_admins("hasBloodToOvercomeHvo called")
+	if((unresuscitatable = TRUE) && (blood_volume <= BLOOD_VOLUME_SAFE))
+		message_admins("Resuscitation target [target] cannot overcome HVO")
+		return FALSE
+	message_admins("Resuscitation target [target] can overcome HVO")
+	return TRUE
+
 
 /mob/living/carbon/human/adjustBrainLoss(amount)
 
@@ -529,3 +567,4 @@ This function restores all limbs.
 		damage_to_deal *= 0.25 // Massively reduced effectiveness
 
 	stamina.apply_damage(damage_to_deal)
+
